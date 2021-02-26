@@ -127,7 +127,7 @@ $(document).ready(function(){
                 '                                <div class=" hotspot">' +
                 '                                    <header class=" hotspot-header">' +
                 '                                        <div class=" hotspot-section">' +
-                '                                            <div class=" hotspot-location mono">'+hotspot['country']+', '+hotspot['country_code']+
+                '                                            <div class=" hotspot-location mono">'+hotspot['city']+', '+hotspot['country']+', '+hotspot['country_code']+
                 '                                            </div>' +
                 '                                        </div>' +
                 '                                        <div class=" hotspot-section">' +
