@@ -106,6 +106,37 @@ map.on('load', function () {
     });
 });
 
+map.on('click', 'points', function (e) {
+    var coordinates = e.features[0].geometry.coordinates.slice();
+    var properties = e.features[0].properties;
+    var prop_html = '<table>';
+    for (const property in properties) {
+        prop_html+=`<tr><td>${property}</td><td>${properties[property]}</td></tr>`
+    }
+    prop_html+='</table>'
+// Ensure that if the map is zoomed out such that multiple
+// copies of the feature are visible, the popup appears
+// over the copy being pointed to.
+    while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+    }
+
+    new mapboxgl.Popup()
+        .setLngLat(coordinates)
+        .setHTML(prop_html)
+        .addTo(map);
+});
+
+// Change the cursor to a pointer when the mouse is over the places layer.
+map.on('mouseenter', 'points', function () {
+    map.getCanvas().style.cursor = 'pointer';
+});
+
+// Change it back to a pointer when it leaves.
+map.on('mouseleave', 'points', function () {
+    map.getCanvas().style.cursor = '';
+});
+
 $(document).ready(function(){
         var poi_data;
         $.ajax({
@@ -118,12 +149,18 @@ $(document).ready(function(){
         function populate_search(pois) {
             $('#title_hotspot').html(pois['numberReturned']);
             pois['features'].forEach(add_hotspot)
+            $("li").on('click', function() {
+                var x = this.id.split('_')[0];
+                var y = this.id.split('_')[1];
+                zoommap(x,y);
+            });
         }
     // {"address":"188.166.165.99","country":"Germany","country_code":"DE","createdat":"2021-02-20T19:40:05.038Z","id":"60316595a206f4634f0a2504","port":"6888","protocol":"70015","v":"0","version":"VersaCoin:0.17.1","x":8.6843,"y":50.1188}}
         function add_hotspot(hotspot) {
             console.log(hotspot)
             var hotspot = hotspot['properties']
-            var temp_html = '                 <li class="">' +
+            var id = hotspot['x']+'_'+hotspot['y']
+            var temp_html = '                 <li class="hotspotclick" id="'+id+'">' +
                 '                                <div class=" hotspot">' +
                 '                                    <header class=" hotspot-header">' +
                 '                                        <div class=" hotspot-section">' +
@@ -162,4 +199,16 @@ function myFunction() {
             li[i].style.display = "none";
         }
     }
+}
+
+function zoommap(x,y) {
+
+    map.flyTo({
+        center: [
+            x,
+            y
+        ],
+        essential: true,
+        zoom: 15 // this animation is considered essential with respect to prefers-reduced-motion
+    });
 }
