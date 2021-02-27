@@ -109,10 +109,15 @@ map.on('load', function () {
 map.on('click', 'points', function (e) {
     var coordinates = e.features[0].geometry.coordinates.slice();
     var properties = e.features[0].properties;
+
     var prop_html = '<table>';
-    for (const property in properties) {
-        prop_html+=`<tr><td>${property}</td><td>${properties[property]}</td></tr>`
-    }
+    prop_html+='<tr><td>Country</td><td>'+properties['country']+'</td></tr>'
+    prop_html+='<tr><td>city</td><td>'+properties['city']+'</td></tr>'
+    prop_html+='<tr><td>version</td><td>'+properties['version']+'</td></tr>'
+    prop_html+='<tr><td>createdat</td><td>'+properties['createdat']+'</td></tr>'
+    // for (const property in properties) {
+    //     prop_html+=`<tr><td>${property}</td><td>${properties[property]}</td></tr>`
+    // }
     prop_html+='</table>'
 // Ensure that if the map is zoomed out such that multiple
 // copies of the feature are visible, the popup appears
