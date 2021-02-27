@@ -145,7 +145,7 @@ map.on('mouseleave', 'points', function () {
 $(document).ready(function(){
         var poi_data;
         $.ajax({
-            url: "http://178.128.219.155:9000/collections/public.tbl_data/items.json",
+            url: "http://178.128.219.155:9000/collections/public.tbl_data/items.json?limit=100000",
             success: function(data){
                 poi_data = data;
                 populate_search(poi_data)
