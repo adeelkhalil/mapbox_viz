@@ -195,13 +195,20 @@ function myFunction() {
     filter = input.value.toUpperCase();
     ul = document.getElementById("hotspot_list");
     li = ul.getElementsByTagName("li");
+    var t_records = li.length;
+    var records = li.length;
+    $('#title_hotspot').html(records);
+
     for (i = 0; i < li.length; i++) {
         a = li[i].getElementsByClassName("hotspot-location")[0];
         txtValue = a.textContent || a.innerText;
         if (txtValue.toUpperCase().indexOf(filter) > -1) {
             li[i].style.display = "";
+
         } else {
             li[i].style.display = "none";
+            records--;
+            $('#title_hotspot').html(records);
         }
     }
 }
