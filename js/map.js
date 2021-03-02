@@ -90,7 +90,7 @@ map.on('load', function () {
     map.addSource('points', {
         'type': 'vector',
         'tiles': [
-            'http://178.128.219.155:7800/public.tbl_data/{z}/{x}/{y}.pbf'
+            'https://versacoin.network/tile_serv/public.tbl_data/{z}/{x}/{y}.pbf'
         ],
         'minzoom': 0,
         'maxzoom': 22
@@ -145,7 +145,7 @@ map.on('mouseleave', 'points', function () {
 $(document).ready(function(){
         var poi_data;
         $.ajax({
-            url: "http://178.128.219.155:9000/collections/public.tbl_data/items.json?limit=100000",
+            url: "https://versacoin.network/feature_serve/collections/public.tbl_data/items.json?limit=100000",
             success: function(data){
                 poi_data = data;
                 populate_search(poi_data)
